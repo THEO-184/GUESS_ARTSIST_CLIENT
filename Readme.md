@@ -1,12 +1,12 @@
-** BLINDSPOT TECHINAL INTERVIEW TEST **
+**BLINDSPOT TECHINAL INTERVIEW TEST**
 
 ### applicant_name: Theophilus Boakye
 
 #### [Github] (https://github.com/THEO-184)
 
-** GUIDLINES TO RUNNING THE APP **
+**GUIDLINES TO RUNNING THE APP**
 
-** SERVER SIDE **
+**SERVER SIDE**
 
 1: npm install
 2: create a .env file with the following variables
@@ -18,7 +18,7 @@
 
 3: npm run dev
 
-** FRONTEND **
+**FRONTEND**
 Run the folling commands
 
 1: npm install
