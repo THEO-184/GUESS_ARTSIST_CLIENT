@@ -14,7 +14,8 @@
 - MONGO_URI="your mongodb connection uri"
 
 - JWT_SECRET="any 256-bit encryption key"
-  you can generate one from here [allkeysgenerator] (https://allkeysgenerator.com/)
+
+you can generate one from here [allkeysgenerator] (https://allkeysgenerator.com/)
 
 3. npm run dev
 
