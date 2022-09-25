@@ -33,7 +33,6 @@ export interface GameResponse {
 	msg: string;
 }
 
-export type RequestResponse = GameResponse;
 export interface RequestBody {
 	attemptNumber: number;
 	scores: number;
@@ -43,4 +42,8 @@ export interface RequestBody {
 export interface UsersScores {
 	count: number;
 	scores: User[];
+}
+export interface FormRequestBody {
+	username: string;
+	password: string;
 }

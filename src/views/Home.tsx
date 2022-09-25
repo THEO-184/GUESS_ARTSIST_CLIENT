@@ -5,6 +5,7 @@ import { GameResponse, RequestBody } from "../utils/Interfaces";
 import { AxiosResponse } from "axios";
 import { useAuthContext } from "../components/ProtectedRoute";
 import GameOver from "../components/GameOver";
+import Button from "../components/Button";
 
 interface Props {
 	setUserScore: React.Dispatch<React.SetStateAction<number>>;
@@ -176,22 +177,19 @@ const Home = ({ setUserScore, setRound }: Props) => {
 				</div>
 			)}
 
-			{/* <h3 className="text-slate-900 text-2xl uppercase">Score: {userScore}</h3> */}
-
 			<div className=" w-11/12 h-full sm:w-2/4 sm:h-2/4 mx-auto text-center flex justify-start items-center flex-col">
 				<h1 className="text-emerald-600 text-2xl mb-1">ROUND {roundNumber}</h1>
 				<h1 className=" text-slate-800 text-lg">
 					Guess the exact full name of artist for the album below
 				</h1>
 
-				{/* <h6>Artist Name: {artistName}</h6> */}
 				<h6 className="text-green-400 text-lg p-2">Attempt: {attemptNum}</h6>
 
 				<h3 className="text-blue-600 text-2xl">{albumName}</h3>
 
 				<div className="w-[300px]">
 					<input
-						className="w-[300px] h-11 bg-slate-200 block p-2 border-0 focus:outline-none m-4"
+						className="w-full h-11 bg-slate-200 block  border-0 focus:outline-none my-4 p-2"
 						type="text"
 						value={guess}
 						onChange={(e) => {
@@ -199,19 +197,19 @@ const Home = ({ setUserScore, setRound }: Props) => {
 							setIsGuessRight(false);
 						}}
 					/>
-					<div className="flex w-full items-center justify-between p-2">
-						<button
+
+					<div className="flex w-full items-center justify-between">
+						<Button
+							text={reStart ? "restarting..." : "Restart Game"}
 							onClick={handleRestartGame}
-							className="w-2/5 p-2 rounded-md bg-red-400 block text-white"
-						>
-							{reStart ? "restarting..." : "Restart Game"}
-						</button>
-						<button
+							className="w-2/5"
+						/>
+						<Button
+							text={loading ? "guessing..." : "Guess"}
 							onClick={handleGuessArtist}
-							className="w-2/5 p-2 rounded-md bg-sky-400 block text-white"
-						>
-							{loading ? "guessing..." : "Guess"}
-						</button>
+							color="bg-sky-400"
+							className="w-2/5"
+						/>
 					</div>
 				</div>
 			</div>
