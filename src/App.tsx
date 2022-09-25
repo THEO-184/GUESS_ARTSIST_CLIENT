@@ -18,12 +18,12 @@ function App() {
 			<Routes>
 				<Route path="/login" element={<Login />} />
 				<Route path="/Signup" element={<SignUp />} />
+				<Route path="/dashboard" element={<Dashboard />} />
 				<Route element={<ProtectedRoute />}>
 					<Route
 						path="/"
 						element={<Home setUserScore={setUserScore} setRound={setRound} />}
 					/>
-					<Route path="/dashboard" element={<Dashboard />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

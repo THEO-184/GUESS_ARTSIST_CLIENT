@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { GameResponse, RequestBody } from "../utils/Interfaces";
 import { AxiosResponse } from "axios";
 import { useAuthContext } from "../components/ProtectedRoute";
+import GameOver from "../components/GameOver";
 
 interface Props {
 	setUserScore: React.Dispatch<React.SetStateAction<number>>;
@@ -72,10 +73,10 @@ const Home = ({ setUserScore, setRound }: Props) => {
 						navigate("/dashboard");
 					}, 3000);
 				}
+				setRound(user?.round);
 				setArtistName(album.artistName);
 				setRoundNumber(user?.round);
 				setUserScore(user?.scores);
-				setRound(user?.round);
 				setAttemptNum(attemptNumber);
 				setAlbumName(album.collectionName);
 				setArtwork(album.artworkUrl60 || album.artworkUrl100);
@@ -95,8 +96,8 @@ const Home = ({ setUserScore, setRound }: Props) => {
 					});
 					const { user, albums: album, attemptNumber } = res.data;
 
-					setArtistName(album.artistName);
 					setRoundNumber(user?.round);
+					setArtistName(album.artistName);
 					setAttemptNum(attemptNumber);
 					setAlbumName(album.collectionName);
 					setArtwork(album.artworkUrl60 || album.artworkUrl100);
@@ -128,10 +129,10 @@ const Home = ({ setUserScore, setRound }: Props) => {
 		const { user, albums: album, attemptNumber } = res.data;
 
 		setGuess("");
+		setRound(user?.round);
 		setArtistName(album.artistName);
 		setRoundNumber(user?.round);
 		setUserScore(user?.scores);
-		setRound(user?.round);
 		setAttemptNum(attemptNumber);
 		setAlbumName(album.collectionName);
 		setArtwork(album.artworkUrl60 || album.artworkUrl100);
@@ -152,14 +153,11 @@ const Home = ({ setUserScore, setRound }: Props) => {
 
 	if (roundNumber >= 5) {
 		return (
-			<div className="flex w-full items-center justify-center p-2 h-screen">
-				<button
-					onClick={handleRestartGame}
-					className="w-2/5 p-2 rounded-md bg-red-400 block text-white"
-				>
-					{reStart ? "restarting..." : "Restart Game"}
-				</button>
-			</div>
+			<GameOver
+				onClick={handleRestartGame}
+				text={reStart}
+				numberInput={userScore}
+			/>
 		);
 	}
 
