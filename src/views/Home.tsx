@@ -197,7 +197,6 @@ const Home = ({ setUserScore, setRound }: Props) => {
 							setIsGuessRight(false);
 						}}
 					/>
-
 					<div className="flex w-full items-center justify-between">
 						<Button
 							text={reStart ? "restarting..." : "Restart Game"}
