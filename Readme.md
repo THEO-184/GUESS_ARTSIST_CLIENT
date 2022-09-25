@@ -8,19 +8,19 @@
 
 **SERVER SIDE**
 
-1: npm install
-2: create a .env file with the following variables
+1. npm install
+2. create a .env file with the following variables
 
 - MONGO_URI="your mongodb connection uri"
 
-* JWT_SECRET="any 256-bit encryption key"
+- JWT_SECRET="any 256-bit encryption key"
   you can generate one from here [allkeysgenerator] (https://allkeysgenerator.com/)
 
-3: npm run dev
+3. npm run dev
 
 **FRONTEND**
 Run the folling commands
 
-1: npm install
-2: npm run dev
-** NB: if vite is failing, check that your node version is 12; **
+1. npm install
+2. npm run dev
+   **NB: if vite is failing, check that your node version is 12**
