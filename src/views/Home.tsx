@@ -168,7 +168,11 @@ const Home = ({ setUserScore, setRound }: Props) => {
 	return (
 		<div className="flex items-center justify-center h-screen flex-col">
 			{hasUserGuess && (
-				<p className="text-red-400 fixed top-[15%] left-[50%] translate-x--[70%] p-2 text-2xl">
+				<p
+					className={`${
+						IsGuessRight ? "text-green-400" : "text-red-400"
+					} fixed top-[15%] left-[50%] translate-x--[70%] p-2 text-2xl`}
+				>
 					{IsGuessRight ? `${attemptScore} POINTS!!` : "WRONG"}
 				</p>
 			)}
