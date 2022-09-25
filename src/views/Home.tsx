@@ -5,6 +5,7 @@ import { GameResponse, RequestBody } from "../utils/Interfaces";
 import { AxiosResponse } from "axios";
 import { useAuthContext } from "../components/ProtectedRoute";
 import GameOver from "../components/GameOver";
+import Button from "../components/Button";
 
 interface Props {
 	setUserScore: React.Dispatch<React.SetStateAction<number>>;
@@ -191,7 +192,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 
 				<div className="w-[300px]">
 					<input
-						className="w-[300px] h-11 bg-slate-200 block p-2 border-0 focus:outline-none m-4"
+						className="w-full h-11 bg-slate-200 block  border-0 focus:outline-none my-4"
 						type="text"
 						value={guess}
 						onChange={(e) => {
@@ -199,19 +200,18 @@ const Home = ({ setUserScore, setRound }: Props) => {
 							setIsGuessRight(false);
 						}}
 					/>
-					<div className="flex w-full items-center justify-between p-2">
-						<button
+					<div className="flex w-full items-center justify-between">
+						<Button
+							text={reStart ? "restarting..." : "Restart Game"}
 							onClick={handleRestartGame}
-							className="w-2/5 p-2 rounded-md bg-red-400 block text-white"
-						>
-							{reStart ? "restarting..." : "Restart Game"}
-						</button>
-						<button
+							className="w-2/5"
+						/>
+						<Button
+							text={loading ? "guessing..." : "Guess"}
 							onClick={handleGuessArtist}
-							className="w-2/5 p-2 rounded-md bg-sky-400 block text-white"
-						>
-							{loading ? "guessing..." : "Guess"}
-						</button>
+							color="bg-sky-400"
+							className="w-2/5"
+						/>
 					</div>
 				</div>
 			</div>
