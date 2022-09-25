@@ -28,6 +28,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 	const [gameOver, setGameOver] = useState(false);
 	const [error, setError] = useState(false);
 	const [reStart, setreStart] = useState(false);
+	const [attemptScore, setAttemptScore] = useState(0);
 
 	const timeOut = () =>
 		setTimeout(() => {
@@ -39,6 +40,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 		if (guess) {
 			setHasUserGuess(true);
 			setGuess("");
+			setAttemptScore(0);
 			let modifiedGuess = guess.replace("and", "&");
 			if (
 				modifiedGuess.toLowerCase() === artistName.toLowerCase() ||
@@ -47,6 +49,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 				setIsGuessRight(true);
 				timeOut();
 				let score = attemptNum === 1 ? 5 : attemptNum === 2 ? 3 : 1;
+				setAttemptScore(score);
 				if (
 					attemptNum === 3 &&
 					modifiedGuess.toLowerCase() !== artistName.toLowerCase()
@@ -166,7 +169,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 		<div className="flex items-center justify-center h-screen flex-col">
 			{hasUserGuess && (
 				<p className="text-red-400 fixed top-[15%] left-[50%] translate-x--[70%] p-2 text-2xl">
-					{IsGuessRight ? `${userScore} POINTS!!` : "WRONG"}
+					{IsGuessRight ? `${attemptScore} POINTS!!` : "WRONG"}
 				</p>
 			)}
 
