@@ -8,7 +8,7 @@
 
 **GUIDLINES TO RUNNING THE APP**
 
-**SERVER SIDE**
+<!-- **SERVER SIDE**
 
 1. npm install
 2. create a .env file with the following variables
@@ -19,7 +19,7 @@
 
 you can generate one from here [allkeysgenerator] (https://allkeysgenerator.com/)
 
-3. npm run dev
+3. npm run dev -->
 
 **FRONTEND**
 
