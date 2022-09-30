@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
-		"serve": "npm run build && vite preview"
+		"preview": "vite preview"
 	},
 	"dependencies": {
 		"axios": "^0.27.2",
