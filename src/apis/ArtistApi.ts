@@ -10,7 +10,6 @@ const token = tokenString || null;
 
 export const api = axios.create({
 	baseURL: BASE_URL,
-	withCredentials: true,
 	headers: {
 		authorization: `Bearer ${token}`,
 	},
