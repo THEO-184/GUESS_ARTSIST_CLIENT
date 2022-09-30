@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import api from "../apis/ArtistApi";
-import { useNavigate } from "react-router-dom";
-import { GameResponse, RequestBody } from "../utils/Interfaces";
 import { AxiosResponse } from "axios";
-import { useAuthContext } from "../components/ProtectedRoute";
+
+import { AddToState, GameResponse, RequestBody } from "../utils/Interfaces";
+import api from "../apis/ArtistApi";
 import GameOver from "../components/GameOver";
 import Button from "../components/Button";
 
@@ -13,8 +12,6 @@ interface Props {
 }
 
 const Home = ({ setUserScore, setRound }: Props) => {
-	const navigate = useNavigate();
-
 	const [artistName, setArtistName] = useState("");
 	const [guess, setGuess] = useState("");
 	const [albumName, setAlbumName] = useState("");
@@ -25,8 +22,8 @@ const Home = ({ setUserScore, setRound }: Props) => {
 	const [IsGuessRight, setIsGuessRight] = useState(false);
 	const [hasUserGuess, setHasUserGuess] = useState(false);
 	const [userScore, setScorePoint] = useState(0);
-	const [gameOver, setGameOver] = useState(false);
-	const [error, setError] = useState(false);
+	const [gameOver] = useState(false);
+	const [error] = useState(false);
 	const [reStart, setreStart] = useState(false);
 	const [attemptScore, setAttemptScore] = useState(0);
 
@@ -35,15 +32,33 @@ const Home = ({ setUserScore, setRound }: Props) => {
 			setHasUserGuess(false);
 		}, 2000);
 
+	const store_data_to_state: AddToState = (data) => {
+		const { albums: album, user, attemptNumber } = data;
+		setRound(user?.round);
+		if (user.round > 5) {
+			setRoundNumber(user.round);
+			setScorePoint(user.scores);
+			setUserScore(user.scores);
+			return;
+		}
+		setArtistName(album.artistName);
+		setRoundNumber(user?.round);
+		setUserScore(user?.scores);
+		setAttemptNum(attemptNumber);
+		setAlbumName(album.collectionName);
+		setArtwork(album.artworkUrl60 || album.artworkUrl100);
+		setScorePoint(user.scores);
+	};
+
 	const handleGuessArtist = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (guess) {
 			setHasUserGuess(true);
 			setGuess("");
 			setAttemptScore(0);
-			let modifiedGuess = guess.replace("and", "&");
+			const modifiedUserInput = guess.replace("and", "&");
 			if (
-				modifiedGuess.toLowerCase() === artistName.toLowerCase() ||
+				modifiedUserInput.toLowerCase() === artistName.toLowerCase() ||
 				attemptNum === 3
 			) {
 				setIsGuessRight(true);
@@ -52,7 +67,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 				setAttemptScore(score);
 				if (
 					attemptNum === 3 &&
-					modifiedGuess.toLowerCase() !== artistName.toLowerCase()
+					modifiedUserInput.toLowerCase() !== artistName.toLowerCase()
 				) {
 					score = userScore;
 				} else {
@@ -69,22 +84,11 @@ const Home = ({ setUserScore, setRound }: Props) => {
 					scores: score,
 					round: roundNumber + 1,
 				});
-				const { user, albums: album, attemptNumber, msg } = data;
+				const { msg } = data;
 				if (msg) {
-					setGameOver(true);
-					setTimeout(() => {
-						setGameOver(false);
-						navigate("/dashboard");
-					}, 3000);
+					setRoundNumber(6);
 				}
-				setRound(user?.round);
-				setArtistName(album.artistName);
-				setRoundNumber(user?.round);
-				setUserScore(user?.scores);
-				setAttemptNum(attemptNumber);
-				setAlbumName(album.collectionName);
-				setArtwork(album.artworkUrl60 || album.artworkUrl100);
-				setScorePoint(user.scores);
+				store_data_to_state(data);
 				setLoading(false);
 			} else {
 				timeOut();
@@ -116,31 +120,19 @@ const Home = ({ setUserScore, setRound }: Props) => {
 		setreStart(true);
 		e.preventDefault();
 		const { data } = await api.put<GameResponse>("game/restart");
-		const { user, albums: album, attemptNumber } = data;
-		setArtistName(album.artistName);
-		setRoundNumber(user?.round);
-		setAttemptNum(attemptNumber);
-		setAlbumName(album.collectionName);
-		setArtwork(album.artworkUrl60 || album.artworkUrl100);
-		setScorePoint(user.scores);
-		setUserScore(user?.scores);
-		setRound(user?.round);
+		store_data_to_state(data);
 		setreStart(false);
+	};
+
+	const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setGuess(e.target.value);
+		setIsGuessRight(false);
 	};
 
 	const getUserAlbums = async () => {
 		const res = await api.get<GameResponse>("/game/attempts");
-		const { user, albums: album, attemptNumber } = res.data;
-
 		setGuess("");
-		setRound(user?.round);
-		setArtistName(album.artistName);
-		setRoundNumber(user?.round);
-		setUserScore(user?.scores);
-		setAttemptNum(attemptNumber);
-		setAlbumName(album.collectionName);
-		setArtwork(album.artworkUrl60 || album.artworkUrl100);
-		setScorePoint(user.scores);
+		store_data_to_state(res.data);
 	};
 
 	useEffect(() => {
@@ -155,7 +147,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 			</div>
 		);
 
-	if (roundNumber >= 5) {
+	if (roundNumber > 5) {
 		return (
 			<GameOver
 				onClick={handleRestartGame}
@@ -195,10 +187,7 @@ const Home = ({ setUserScore, setRound }: Props) => {
 						className="w-full h-11 bg-slate-200 block  border-0 focus:outline-none my-4 p-2"
 						type="text"
 						value={guess}
-						onChange={(e) => {
-							setGuess(e.target.value);
-							setIsGuessRight(false);
-						}}
+						onChange={handleUserInput}
 					/>
 					<div className="flex w-full items-center justify-between">
 						<Button

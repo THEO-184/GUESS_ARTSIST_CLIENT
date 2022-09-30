@@ -1,4 +1,5 @@
-import { AxiosResponse } from "axios";
+export type AddToState = (data: GameResponse) => void;
+
 export interface AlbumReturnType {
 	resultCount: Number;
 	results: {

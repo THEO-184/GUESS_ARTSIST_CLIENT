@@ -20,7 +20,7 @@ const Header = ({ userScore, round }: Props) => {
 				<Link to={"/login"}>Login</Link>
 				<button onClick={logout}>Logout</button>
 				<Link to={"/dashboard"}>Scoreboard</Link>
-				{round >= 5 && <span className="">SCORES: {userScore}</span>}
+				{round > 5 && <span className="">SCORES: {userScore}</span>}
 			</nav>
 		</div>
 	);

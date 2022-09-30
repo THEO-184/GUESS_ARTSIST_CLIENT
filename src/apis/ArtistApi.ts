@@ -1,7 +1,8 @@
 import { AlbumReturnType } from "../utils/Interfaces";
 import axios from "axios";
 
-const BASE_URL = "https://guess-artist.onrender.com/api/v1";
+//  https://guess-artist.onrender.com
+const BASE_URL = "http://localhost:5000/api/v1";
 
 const tokenString = localStorage.getItem("token")!;
 
