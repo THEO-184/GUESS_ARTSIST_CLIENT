@@ -5,6 +5,7 @@ import { AddToState, GameResponse, RequestBody } from "../utils/Interfaces";
 import api from "../apis/ArtistApi";
 import GameOver from "../components/GameOver";
 import Button from "../components/Button";
+import ScoreNotification from "../components/ScoreNotification";
 
 interface Props {
 	setUserScore: React.Dispatch<React.SetStateAction<number>>;
@@ -159,11 +160,12 @@ const Home = ({ setUserScore, setRound }: Props) => {
 
 	return (
 		<div className="flex items-center justify-center h-screen flex-col">
-			<ScoreNotification
-				IsGuessRight={IsGuessRight}
-				hasUserGuess={hasUserGuess}
-				attemptScore={attemptScore}
-			/>
+			{hasUserGuess && (
+				<ScoreNotification
+					IsGuessRight={IsGuessRight}
+					attemptScore={attemptScore}
+				/>
+			)}
 
 			{attemptNum === 3 && (
 				<div className="flex justify-center flex-col">
@@ -211,26 +213,5 @@ const Home = ({ setUserScore, setRound }: Props) => {
 		</div>
 	);
 };
-
-interface ScoreProps {
-	hasUserGuess: boolean;
-	IsGuessRight: boolean;
-	attemptScore: number;
-}
-
-const ScoreNotification = ({
-	hasUserGuess,
-	IsGuessRight,
-	attemptScore,
-}: ScoreProps) =>
-	hasUserGuess ? (
-		<p
-			className={`${
-				IsGuessRight ? "text-green-400" : "text-red-400"
-			} fixed top-[15%] left-[50%] translate-x--[70%] p-2 text-2xl`}
-		>
-			{IsGuessRight ? `${attemptScore} POINTS!!` : "WRONG"}
-		</p>
-	) : null;
 
 export default Home;
