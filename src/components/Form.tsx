@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import InputElement from "./InputElement";
 interface Props {
 	username: string;
 	password: string;
@@ -14,32 +15,30 @@ const Form = (props: Props) => {
 	const { username, password, setName, setPassword, onSubmit, loading, title } =
 		props;
 
+	const handleUserNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setName(e.target.value);
+		console.log("name", e.target.value);
+	};
+	const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPassword(e.target.value);
+	};
+
 	return (
-		<form className="w-1/2 h-96 bg-violet-600  text-white m-auto flex items-center justify-center flex-col text-left">
+		<form className="w-11/12 sm:w-1/2 h-96 bg-violet-600  text-white m-auto flex items-center justify-center flex-col text-left">
 			<h3>{loading && "loading..."}</h3>
 			<h3>{title}</h3>
-			<label htmlFor="username" className="my-2">
-				<span>User Name</span>
-				<input
-					type="text"
-					placeholder="username"
-					value={username}
-					onChange={(e) => setName(e.target.value)}
-					name="username"
-					className="w-11/12 h-9 p-2 my-2 text-slate-700"
-				/>
-			</label>
-			<label htmlFor="password" className="my-2">
-				<span>Password</span>
-				<input
-					type="text"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-					placeholder="password"
-					name="password"
-					className="w-11/12 h-9 p-2 my-2 text-slate-700"
-				/>
-			</label>
+
+			<InputElement
+				onChange={handleUserNameInput}
+				title={"User Name"}
+				value={username}
+			/>
+			<InputElement
+				onChange={handlePasswordInput}
+				title={"Password"}
+				value={password}
+			/>
+
 			<button onClick={onSubmit} className="text-white text-lg m-2">
 				{window.location.pathname === "/login" ? "Login" : "sign up"}
 			</button>
