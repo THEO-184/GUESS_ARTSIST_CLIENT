@@ -17,8 +17,8 @@ const InputElement = ({ value, onChange, title }: Props) => {
 				type="text"
 				value={value}
 				onChange={onChange}
-				placeholder="password"
-				name="password"
+				placeholder={value}
+				name={value}
 				className="w-[200px] sm:w-full h-9 p-2 my-2 text-slate-700"
 			/>
 		</label>
