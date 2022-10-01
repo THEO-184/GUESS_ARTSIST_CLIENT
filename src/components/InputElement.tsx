@@ -1,6 +1,6 @@
 import React from "react";
 
-interface Props {
+interface Props extends React.ComponentPropsWithoutRef<"input"> {
 	value: string;
 	title: string;
 	onChange(e: React.ChangeEvent<HTMLInputElement>): void;
